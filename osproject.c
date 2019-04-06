@@ -28,8 +28,7 @@ void calc()
 		burst--;
 		q[0].priority++;
 		q[0].arr_time=cur_time+1;
-	cur_time++;
-		if(q[0].burst_time==0)
+
 		for(w=1;w<=t;w++)
 	{
 		q[w].priority+=2;
@@ -61,6 +60,7 @@ void calc()
 			}
 		}
 	}
+	
 	if(q[0].priority<=q[1].priority && t>=1)
 	{
 		swap=q[0];
@@ -70,9 +70,10 @@ void calc()
 		}
 		q[t]=swap;
 	}
+	
 	}
 }
-int main()
+void main()
 {	
 	int l,min,n=number(),j,c=0;
 	float avg_w_time=0;
@@ -86,26 +87,31 @@ int main()
 	scanf("%d",&p[l].burst_time);
 	p[l].priority=0;
 	p[l].w_time=0;
-	for(j=0;j<l;j++)
+	burst=burst+p[l].burst_time;
+	}
+	for(l=0;l<n;l++)
+	{
+	
+	for(j=0;j<n;j++)
 	{
 	if(p[l].arr_time<p[j].arr_time)
 	{
 		swap=p[l];
-		p[l]=p[l-1];
-		p[l-1]=swap;
+		p[l]=p[j];
+		p[j]=swap;
 	}
 	if(p[l].arr_time==p[j].arr_time)
 	{
 		if(p[l].burst_time<p[j].burst_time)
 		{
 		swap=p[l];
-		p[l]=p[l-1];
-		p[l-1]=swap;
+		p[l]=p[j];
+		p[j]=swap;
 		}
 	}
 	}
-	burst=burst+p[l].burst_time;
-	}
+	
+}
 		printf("YOU ENTERED:\n*(TABLE IS SORTED ACCORDING TO THE ARRIVAL TIME)\n\n");
 		printf("              PROCESS TABLE  \n");
 		printf("----------------------------------------------\n");
@@ -130,9 +136,11 @@ int main()
 			break;
 		}
 		calc();
+		cur_time++;
 	while(burst!=0 && c==n)
 	{
 		calc();
+		cur_time++;
 	}
 	if(c==n)
 		break;
